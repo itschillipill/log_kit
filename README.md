@@ -132,7 +132,6 @@ Make sure your tests avoid using `SharedPreferencesStorage` directly.
 
 - [ ] File-based logging
 - [ ] SQLite/Isar backends
-- [ ] Web support
 - [ ] Filters, search, export
 
 ---
