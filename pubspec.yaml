@@ -1,7 +1,7 @@
 name: log_kit
-description: "A new Flutter package project."
+description: "A lightweight logging package for Flutter and Dart with persistent storage support."
 version: 0.0.1
-homepage:
+homepage: https://github.com/itschillipill/log_kit
 
 environment:
   sdk: ^3.7.2
