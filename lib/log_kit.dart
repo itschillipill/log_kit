@@ -1,5 +1,8 @@
-/// A Calculator.
-class Calculator {
-  /// Returns [value] plus 1.
-  int addOne(int value) => value + 1;
-}
+library log_kit;
+
+export 'src/logger.dart';
+export 'src/log_kit_base.dart';
+export 'src/log_entry.dart';
+export 'src/storage/storage.dart';
+export 'src/storage/shared_preferences_storage.dart';
+export 'src/storage/storage_type.dart';

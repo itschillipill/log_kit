@@ -1,39 +1,142 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# 📦 log_kit
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/tools/pub/writing-package-pages).
+A lightweight, extensible logging package for Dart and Flutter projects.
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/to/develop-packages).
--->
+Supports:
+- Different log levels: `debug`, `warning`, `error`
+- Colored console output
+- Optional persistent storage (e.g., `SharedPreferences`, in-memory, or custom)
+- Stack trace and source file context
+- Easily pluggable into CLI or Flutter environments
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+---
 
-## Features
+## 🚀 Installation
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+Add to your `pubspec.yaml`:
 
-## Getting started
-
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
-
-## Usage
-
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
-
-```dart
-const like = 'sample';
+```yaml
+dependencies:
+  log_kit:
+    git:
+      url: https://github.com/your_name/log_kit.git
 ```
 
-## Additional information
+---
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+## 🛠️ Usage
+
+### 1. `createLogger()` — for Flutter/SharedPreferences
+
+This method uses `SharedPreferencesStorage` under the hood. Suitable for persistent logging in apps.
+
+```dart
+import 'package:log_kit/log_kit.dart';
+
+Future<void> main() async {
+  final logger = await LogKit.createLogger();
+
+  logger.log('Log from createLogger');
+  logger.warning('This is a warning');
+  logger.error('Something went wrong!', title: 'FatalError');
+
+  await logger.saveLogs();
+
+  for (final entry in logger.logs) {
+    print('- [${entry.logType}] ${entry.message}');
+  }
+}
+```
+
+> ⚠️ This version depends on `shared_preferences`, which internally relies on `dart:ui`.  
+> It **won't work** in pure Dart environments (e.g., `dart test`, command-line apps).
+
+---
+
+### 2. `withStorage()` — for Dart CLI, tests, or custom storage
+
+You can inject your own `Storage` implementation, e.g. for unit tests or non-Flutter apps.
+
+#### Example with in-memory storage:
+```dart
+import 'package:log_kit/log_kit.dart';
+
+class InMemoryStorage implements Storage {
+  final Map<String, dynamic> _store = {};
+
+  @override
+  Future<void> setValue<T>(String key, T value) async {
+    _store[key] = value;
+  }
+
+  @override
+  Future<T?> getValue<T>(String key) async {
+    final value = _store[key];
+    if (value is T) return value;
+    return null;
+  }
+
+  @override
+  Future<void> remove(String key) async => _store.remove(key);
+
+  @override
+  Future<void> clear() async => _store.clear();
+}
+
+Future<void> main() async {
+  final logger = LogKit.withStorage(storage: InMemoryStorage());
+
+  logger.log('CLI debug message');
+  logger.warning('This is a warning');
+  logger.error('Something went wrong');
+
+  await logger.saveLogs();
+
+  print('Current logs:');
+  for (final log in logger.logs) {
+    print('- ${log.message}');
+  }
+}
+```
+
+---
+
+## 📂 Storage Interface
+
+Define your own storage by implementing the `Storage` interface:
+
+```dart
+abstract class Storage {
+  Future<void> setValue<T>(String key, T value);
+  Future<T?> getValue<T>(String key);
+  Future<void> remove(String key);
+  Future<void> clear();
+}
+```
+
+---
+
+## 🧪 Running tests
+
+In environments that **don't support Flutter**, use `withStorage()` and a mock or in-memory storage for test compatibility.
+
+```bash
+dart test
+```
+
+Make sure your tests avoid using `SharedPreferencesStorage` directly.
+
+---
+
+## 📌 TODO
+
+- [ ] File-based logging
+- [ ] SQLite/Isar backends
+- [ ] Web support
+- [ ] Filters, search, export
+
+---
+
+## 📄 License
+
+MIT © 2025 `Chillipill`
