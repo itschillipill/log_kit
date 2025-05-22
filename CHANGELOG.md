@@ -1,6 +1,6 @@
 ## 0.0.1
 
-- Initial release of `log_kit`.
+- Initial release of `flutter_log_kit`.
 - Basic logging API: `log`, `warning`, `error`.
 - In-memory log storage.
 - Optional persistent storage via `Storage` abstraction.

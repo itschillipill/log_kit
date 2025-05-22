@@ -1,4 +1,4 @@
-import 'package:log_kit/log_kit.dart';
+import 'package:flutter_log_kit/log_kit.dart';
 
 /// In-memory implementation of the Storage interface.
 /// This is useful for testing and examples without external dependencies.

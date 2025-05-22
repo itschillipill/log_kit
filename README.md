@@ -1,4 +1,4 @@
-# 📦 log_kit
+# 📦 flutter_log_kit
 
 A lightweight, extensible logging package for Dart and Flutter projects.
 
@@ -19,7 +19,7 @@ Add to your `pubspec.yaml`:
 dependencies:
   log_kit:
     git:
-      url: https://github.com/your_name/log_kit.git
+      url: https://github.com/itschillipill/log_kit.git
 ```
 
 ---
@@ -31,7 +31,7 @@ dependencies:
 This method uses `SharedPreferencesStorage` under the hood. Suitable for persistent logging in apps.
 
 ```dart
-import 'package:log_kit/log_kit.dart';
+import 'package:flutter_log_kit/log_kit.dart';
 
 Future<void> main() async {
   final logger = await LogKit.createLogger();
@@ -59,7 +59,7 @@ You can inject your own `Storage` implementation, e.g. for unit tests or non-Flu
 
 #### Example with in-memory storage:
 ```dart
-import 'package:log_kit/log_kit.dart';
+import 'package:flutter_log_kit/log_kit.dart';
 
 class InMemoryStorage implements Storage {
   final Map<String, dynamic> _store = {};

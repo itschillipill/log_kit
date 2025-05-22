@@ -1,4 +1,4 @@
-name: log_kit
+name: flutter_log_kit
 description: "A lightweight logging package for Flutter and Dart with persistent storage support."
 version: 0.0.1
 homepage: https://github.com/itschillipill/log_kit

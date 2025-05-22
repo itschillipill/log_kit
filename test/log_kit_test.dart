@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:log_kit/log_kit.dart';
+import 'package:flutter_log_kit/log_kit.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
